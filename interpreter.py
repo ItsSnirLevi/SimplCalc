@@ -9,24 +9,8 @@ class SimplCalcInterpreter:
         self.max_variable_length = 10
         self.max_variables_allowed = 10
         self.max_conditionals_level = 3
-
-    # def interpret(self, script):
-    #     if len(script) > self.max_program_length:
-    #         print("Program length exceeds maximum allowed.")
-    #         return
-    #
-    #     statements = self.parse_program(script)
-    #     for statement in statements:
-    #         if statement.startswith("(define"):
-    #             self.evaluate_assignment(statement)
-    #         elif statement.startswith("(print"):
-    #             self.evaluate_print(statement)
-    #         else:
-    #             result = self.evaluate_expression(statement)
-    #             if len(str(result)) > self.max_result_length:
-    #                 print("Result length exceeds maximum allowed.")
-    #                 return
-    #             print(result)
+        self.max_loops_level = 3
+        self.max_loops_reached = 0
 
     def interpret(self, script):
         if len(script) > self.max_program_length:
@@ -35,12 +19,56 @@ class SimplCalcInterpreter:
 
         statements = self.parse_program(script)
         self.interpret_statements(statements, 1)  # Start with conditional level 1
+        self.max_loops_reached = 0
+
+    def interpret_statements(self, statements, level):
+        for statement in statements:
+            if statement.startswith("(define"):
+                self.evaluate_assignment(statement)
+            elif statement.startswith("(print"):
+                self.evaluate_print(statement)
+            elif statement.startswith("(if"):
+                self.evaluate_conditional(statement, level)
+            elif statement.startswith("(while"):
+                self.evaluate_loop(statement, level)
+            else:
+                result = self.evaluate_expression(statement)
+                if len(str(result)) > self.max_result_length:
+                    print("Result length exceeds maximum allowed.")
+                    return
+                print(result)
 
     def parse_program(self, script):
-        commands = [cmd.strip() for cmd in script.split('\n') if cmd.strip()]
-        return commands
+        statements = []
+        statement = ''
+        balance = 0
+
+        # Iterate through each character in the script
+        for char in script:
+            # Keep track of parentheses balance
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+
+            # Append character to the current statement
+            statement += char
+
+            # If balance is 0 and the character is a semicolon, we have a complete statement
+            if balance == 0 and char == ';':
+                statements.append(statement.strip()[:-1])
+                statement = ''  # Reset the statement
+
+
+        # If there's a statement left after iteration, add it to the list
+        if statement.strip():
+            statements.append(statement.strip())
+
+        return statements
 
     def remove_outer_parentheses(self, statement):
+        if statement[0] == ' ':
+            return statement[2:-1]
         return statement[1:-1]
 
     def evaluate_assignment(self, assignment):
@@ -97,33 +125,31 @@ class SimplCalcInterpreter:
         return stack[0]
 
     def evaluate_conditional(self, conditional_statement, level):
-        conditional_statement = self.remove_outer_parentheses(conditional_statement)
-        conditional_statement = conditional_statement.split(maxsplit=1)
-        predicate, consequent = conditional_statement[1].split(":", maxsplit=1)
-
         if level > self.max_conditionals_level:
             print("Maximum conditional level exceeded.")
             return
 
-        predicate_result = self.evaluate_expression(predicate)
-        consequent = consequent[1:]
-        if predicate_result:
-            self.interpret_statements([consequent], level + 1)
+        conditional_statement = self.remove_outer_parentheses(conditional_statement)
+        _, conditional_statement = conditional_statement.split(maxsplit=1)
+        predicate, consequent = conditional_statement.split(":", maxsplit=1)
+        statements = self.parse_program(consequent)
 
-    def interpret_statements(self, statements, level):
-        for statement in statements:
-            if statement.startswith("(define"):
-                self.evaluate_assignment(statement)
-            elif statement.startswith("(print"):
-                self.evaluate_print(statement)
-            elif statement.startswith("(if"):
-                self.evaluate_conditional(statement, level)
-            else:
-                result = self.evaluate_expression(statement)
-                if len(str(result)) > self.max_result_length:
-                    print("Result length exceeds maximum allowed.")
-                    return
-                print(result)
+        if self.evaluate_expression(predicate):
+            self.interpret_statements(statements, level + 1)
+
+    def evaluate_loop(self, loop_statement, level):
+        if level > self.max_loops_level:
+            print("Maximum loop level exceeded.")
+            self.max_loops_reached = 1
+            return
+
+        loop_statement = self.remove_outer_parentheses(loop_statement)
+        _, loop_statement = loop_statement.split(maxsplit=1)
+        predicate, consequent = loop_statement.split(":", maxsplit=1)
+        statements = self.parse_program(consequent)
+
+        while self.evaluate_expression(predicate) and not self.max_loops_reached:
+            self.interpret_statements(statements, level + 1)
 
     def evaluate_print(self, print_statement):
         print_statement = self.remove_outer_parentheses(print_statement)
@@ -135,6 +161,10 @@ class SimplCalcInterpreter:
 
 # Example usage
 interpreter = SimplCalcInterpreter()
-script = "(+ (* 2 4) (- 4 6))\n(define x 10)\n(print x)\n(define y (+ x 5))\n(print y)\n (= (+ x 5) y)\n" \
-        "(if (< 1 4) : (if (< 2 4) : (if (< 3 4) : (1000)))) \n"
+
+with open('script.txt', 'r') as file:
+    script = file.read()
+
 interpreter.interpret(script)
+
+
