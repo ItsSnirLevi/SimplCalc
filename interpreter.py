@@ -42,23 +42,35 @@ class SimplCalcInterpreter:
         statements = []
         statement = ''
         balance = 0
+        in_comment = False
 
         # Iterate through each character in the script
         for char in script:
-            # Keep track of parentheses balance
+            # Check if within a comment
+            if char == '#' and not in_comment:
+                in_comment = True
+
+            # If within a comment, skip characters until newline
+            if in_comment and char != '\n':
+                continue
+            elif in_comment and char == '\n':
+                in_comment = False
+                continue
+
+            # Keep track of parentheses balance unless within a comment
             if char == '(':
                 balance += 1
             elif char == ')':
                 balance -= 1
 
-            # Append character to the current statement
-            statement += char
+            # Append character to the current statement if not within a comment
+            if not in_comment:
+                statement += char
 
             # If balance is 0 and the character is a semicolon, we have a complete statement
             if balance == 0 and char == ';':
                 statements.append(statement.strip()[:-1])
                 statement = ''  # Reset the statement
-
 
         # If there's a statement left after iteration, add it to the list
         if statement.strip():
@@ -153,11 +165,36 @@ class SimplCalcInterpreter:
 
     def evaluate_print(self, print_statement):
         print_statement = self.remove_outer_parentheses(print_statement)
-        _, variable = print_statement.split()
-        if variable in self.symbol_table:
-            print(self.symbol_table[variable])
+        _, content = print_statement.split(maxsplit=1)
+        if not content.startswith('('):
+            print(f"Error: expected '(' after print")
+            return
+        content = self.remove_outer_parentheses(content)
+        content = content.strip()
+
+        # Check if the content is a string (enclosed in double quotes)
+        if content.startswith('"') and content.endswith('"'):
+            print(content.strip('"'))
         else:
-            print(f"Variable '{variable}' not defined.")
+            # Split the content into parts separated by commas
+            parts = [part.strip() for part in re.split(r',(?![^\(]*\))', content)]
+
+            for part in parts:
+                if part.startswith('"') and part.endswith('"'):
+                    print(part.strip('"'), end=' ')
+                else:
+                    try:
+                        # Try to evaluate the part as an expression
+                        result = self.evaluate_expression(part)
+                        print(result, end=' ')
+                    except ValueError:
+                        # If it's not a valid expression, print the string representation of the variable
+                        if part in self.symbol_table:
+                            print(self.symbol_table[part], end=' ')
+                        else:
+                            # If the variable is not defined, print an error
+                            print(f"Error: Variable '{part}' not defined.", end=' ')
+            print()  # Print a newline after the entire content has been printed
 
 # Example usage
 interpreter = SimplCalcInterpreter()
