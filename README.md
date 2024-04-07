@@ -1,6 +1,6 @@
 ## SimpleCalc Interpreter
 
-The SimpleCalc Interpreter is a Python program designed to interpret and execute scripts written in the SimpleCalc language. SimpleCalc is a simple scripting language with support for basic arithmetic operations, variable assignment, conditionals, loops, and printing.
+The SimpleCalc Interpreter is a Python program designed to interpret and execute scripts written in the SimpleCalc language. SimpleCalc is a simple scripting language with support for basic prefix arithmetic operations, variable assignment, conditionals, loops, and printing.
 
 ### Features
 
@@ -67,7 +67,7 @@ Here are some examples of SimpleCalc scripts you can try:
 ```
 (define x 0);
 (while (< x 5) :
-  (print x);
+  (print (x));
   (define x (+ x 1));
 );
 ```
