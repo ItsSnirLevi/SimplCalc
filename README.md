@@ -6,8 +6,8 @@ The SimpleCalc Interpreter is a Python program designed to interpret and execute
 
 * **Variable Assignment:** Define variables using the `(define <variable> <expression>);` syntax.
 * **Arithmetic Expressions:** Perform arithmetic operations such as addition, subtraction, multiplication, and division.
-* **Conditionals:** Use if statements (`if <condition> : <statement>;`) to execute code conditionally.
-* **Loops:** Utilize while loops (`while <condition> : <statement>;`) for repetitive tasks.
+* **Conditionals:** Use if statements `(if <condition> : <statement>);` to execute code conditionally.
+* **Loops:** Utilize while loops `(while <condition> : <statement>);` for repetitive tasks.
 * **Printing:** Print variable values and expressions using the `(print (<content>));` syntax.
 
 ### Getting Started
