@@ -19,7 +19,6 @@ class SimplCalcInterpreter:
 
         statements = self.parse_program(script)
         self.interpret_statements(statements, 1)  # Start with conditional level 1
-        self.max_loops_reached = 0
 
     def interpret_statements(self, statements, level):
         for statement in statements:
@@ -44,7 +43,6 @@ class SimplCalcInterpreter:
         balance = 0
         in_comment = False
 
-        # Iterate through each character in the script
         for char in script:
             # Check if within a comment
             if char == '#' and not in_comment:
@@ -163,6 +161,10 @@ class SimplCalcInterpreter:
         while self.evaluate_expression(predicate) and not self.max_loops_reached:
             self.interpret_statements(statements, level + 1)
 
+        if level == 1 and self.max_loops_reached:
+            self.max_loops_reached = 0
+            return
+
     def evaluate_print(self, print_statement):
         print_statement = self.remove_outer_parentheses(print_statement)
         _, content = print_statement.split(maxsplit=1)
@@ -194,9 +196,9 @@ class SimplCalcInterpreter:
                         else:
                             # If the variable is not defined, print an error
                             print(f"Error: Variable '{part}' not defined.", end=' ')
-            print()  # Print a newline after the entire content has been printed
+            print()
 
-# Example usage
+
 interpreter = SimplCalcInterpreter()
 
 with open('script.txt', 'r') as file:
