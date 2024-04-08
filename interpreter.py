@@ -36,7 +36,8 @@ class SimplCalcInterpreter:
                 if len(str(result)) > self.max_result_length:
                     print("Result length exceeds maximum allowed.")
                     return
-                print(result)
+                if result:
+                    print(result)
 
     def parse_program(self, script):
         statements = []
@@ -117,7 +118,8 @@ class SimplCalcInterpreter:
                     result = operand1 * operand2
                 elif token == "/":
                     if operand2 == 0:
-                        raise ValueError("Division by zero")
+                        print("Error: Division by zero")
+                        return
                     result = operand1 // operand2
                 elif token == "=":
                     result = int(operand1 == operand2)
