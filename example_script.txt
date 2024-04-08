@@ -1,0 +1,31 @@
+# this is a comment
+(define x 10);
+(if (< 1 4) : 
+	(if (< 2 4) :
+		 (if (< 3 4) : 
+			1000;
+		);
+	);
+);
+(while (< x 15) :
+	(print ("x =", x));
+	(define x (+ x 1));
+);
+(+ (* 2 4) (- 4 6));
+(print ("x =", x));
+(define y (+ x  -5));
+(print ("y =", y));
+(= (+ x 5) y);
+
+(define x 0);  
+(define y 1); 
+(define z 0);  
+
+(while (< x 10) :  
+    (print ("x =", x));  
+    (define z (+ z x)); 
+    (define temp y);
+    (define y (+ x y));  
+    (define x temp); 
+);  
+(print ("z =", z));  
