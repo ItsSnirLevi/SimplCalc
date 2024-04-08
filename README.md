@@ -32,7 +32,7 @@ cd PL_Project-SimpleCalc
 
 #### Usage
 
-1. Write your SimpleCalc script in a text file, e.g., `script.txt`.
+1. Write your SimpleCalc script in a text file, e.g., `script.txt`. There is also an example script (`example_script.txt`) you can try.
 2. Run the interpreter with your script:
 
 ```
