@@ -1,6 +1,6 @@
-## SimpleCalc Interpreter
+## SimplCalc Interpreter
 
-The SimpleCalc Interpreter is a Python program designed to interpret and execute scripts written in the SimpleCalc language. SimpleCalc is a simple scripting language with support for basic prefix arithmetic operations, variable assignment, conditionals, loops, and printing.
+The SimplCalc Interpreter is a Python program designed to interpret and execute scripts written in the SimplCalc language. SimplCalc is a simple scripting language with support for basic prefix arithmetic operations, variable assignment, conditionals, loops, and printing.
 
 ### Features
 
@@ -18,21 +18,21 @@ The SimpleCalc Interpreter is a Python program designed to interpret and execute
 
 #### Installation
 
-1. Clone the SimpleCalc Interpreter repository:
+1. Clone the SimplCalc Interpreter repository:
 
 ```
-git clone https://github.com/ItsSnirLevi/PL_Project-SimpleCalc.git
+git clone https://github.com/ItsSnirLevi/PL_Project-SimplCalc.git
 ```
 
 2. Navigate to the project directory:
 
 ```
-cd PL_Project-SimpleCalc
+cd PL_Project-SimplCalc
 ```
 
 #### Usage
 
-1. Write your SimpleCalc script in a text file, e.g., `script.txt`. There is also an example script (`example_script.txt`) you can try.
+1. Write your SimplCalc script in a text file, e.g., `script.txt`. There is also an example script (`example_script.txt`) you can try.
 2. Run the interpreter with your script:
 
 ```
@@ -43,7 +43,7 @@ python interpreter.py script.txt
 
 ### Examples
 
-Here are some examples of SimpleCalc scripts you can try:
+Here are some examples of SimplCalc scripts you can try:
 
 1. **Simple Arithmetic:**
 
