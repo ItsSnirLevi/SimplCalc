@@ -21,7 +21,7 @@ The SimplCalc Interpreter is a Python program designed to interpret and execute 
 1. Clone the SimplCalc Interpreter repository:
 
 ```
-git clone https://github.com/ItsSnirLevi/PL_Project-SimplCalc.git
+git clone https://github.com/ItsSnirLevi/SimplCalc.git
 ```
 
 2. Navigate to the project directory:
