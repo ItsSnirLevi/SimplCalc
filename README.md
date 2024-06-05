@@ -85,11 +85,11 @@ Here are some examples of SimplCalc scripts you can try:
 ```
 
 ### Notes
-a. The left bracket must be right before the keyword (no spaces between the bracket and the keyword), e.g., use `(define x 0)` and not `( define x 0)`.
-b. There must be a space before a bracket, e.g., use `(print (x))` and not `(print(x))`. It doesn't matter how many spaces there are, e.g., `(print   (x)  )` works too.
+a. The left bracket must be right before the keyword (no spaces between the bracket and the keyword), e.g., use `(define x 0)` and not `( define x 0)`.  
+b. There must be a space before a bracket, e.g., use `(print (x))` and not `(print(x))`. It doesn't matter how many spaces there are, e.g., `(print   (x)  )` works too.  
 c. When writing one block of code, the `;` is not necessary (but it doesn't hurt), e.g., `(print (x))`. But when there are multiple lines they should be sperated by `;`, e.g.,
-  `(while (< x 5) : (print (x)); (define x ( + x 1)); )`. Note the `while` statement doesn't have a `;` but the lines of code in the block inside are separated by `;`.
-d. You can comment out lines with `#`.
+  `(while (< x 5) : (print (x)); (define x ( + x 1)); )`. Note the `while` statement doesn't have a `;` but the lines of code in the block inside are separated by `;`.  
+d. You can comment out lines with `#`.  
 
 ### Contributing
 
