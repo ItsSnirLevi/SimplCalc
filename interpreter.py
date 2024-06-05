@@ -202,26 +202,57 @@ class SimplCalcInterpreter:
             print()
 
 
-interpreter = SimplCalcInterpreter()
+# interpreter = SimplCalcInterpreter()
+#
+# # with open('script.txt', 'r') as file:
+# #     script = file.read()
+#
+#
+# if len(sys.argv) != 2:
+#     print("Usage: python interpreter.py <script_file>")
+#     sys.exit(1)
+#
+# script_file = sys.argv[1]
+#
+# try:
+#     with open(script_file, 'r') as file:
+#         script = file.read()
+# except FileNotFoundError:
+#     print(f"Error: File '{script_file}' not found.")
+#     sys.exit(1)
+# except Exception as e:
+#     print(f"Error: {e}")
+#     sys.exit(1)
+#
+# interpreter.interpret(script)
 
-# with open('script.txt', 'r') as file:
-#     script = file.read()
+def main():
+    interpreter = SimplCalcInterpreter()
 
+    if len(sys.argv) == 2:
+        script_file = sys.argv[1]
+        try:
+            with open(script_file, 'r') as file:
+                script = file.read()
+            interpreter.interpret(script)
+        except FileNotFoundError:
+            print(f"Error: File '{script_file}' not found.")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Error: {e}")
+            sys.exit(1)
+    else:
+        print("Welcome to the SimplCalc interactive interpreter.")
+        while True:
+            try:
+                command = input(">>> ")
+                if command.lower() in ["exit", "quit"]:
+                    break
+                interpreter.interpret(command)
+            except (EOFError, KeyboardInterrupt):
+                break
+            except Exception as e:
+                print(f"Error: {e}")
 
-if len(sys.argv) != 2:
-    print("Usage: python interpreter.py <script_file>")
-    sys.exit(1)
-
-script_file = sys.argv[1]
-
-try:
-    with open(script_file, 'r') as file:
-        script = file.read()
-except FileNotFoundError:
-    print(f"Error: File '{script_file}' not found.")
-    sys.exit(1)
-except Exception as e:
-    print(f"Error: {e}")
-    sys.exit(1)
-
-interpreter.interpret(script)
+if __name__ == "__main__":
+    main()
