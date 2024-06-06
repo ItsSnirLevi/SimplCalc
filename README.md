@@ -32,7 +32,7 @@ cd PL_Project-SimplCalc
 
 #### Usage
 
-* Option 1: Run the interpreter with your script
+* Option 1: Run the interpreter with your script.
 1. Write your SimplCalc script in a text file, e.g., `script.txt`. There is also an example script (`example_script.txt`) you can try.
 2. Run the interpreter with your script:
 
