@@ -36,7 +36,7 @@ class SimplCalcInterpreter:
                 if len(str(result)) > self.max_result_length:
                     print("Result length exceeds maximum allowed.")
                     return
-                if result:
+                if result or result == 0:
                     print(result)
 
     def parse_program(self, script):
